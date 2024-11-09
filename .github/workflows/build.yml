@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Code setup
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
       -
@@ -29,17 +29,5 @@ jobs:
       - name: Purge builder and caches
         run: docker buildx rm --all-inactive --force && docker buildx prune --all --force
 
-      - name: Build and push - Python 3.8
-        run: make buildx PYTHON_VERSION=3.8
-
-      - name: Purge builder and caches
-        run: docker buildx rm --all-inactive --force && docker buildx prune --all --force
-
-      - name: Build and push - Python 3.10
-        run: make buildx PYTHON_VERSION=3.10
-
-      - name: Purge builder and caches
-        run: docker buildx rm --all-inactive --force && docker buildx prune --all --force
-
-      - name: Build and push - Python 3.12
-        run: make buildx PYTHON_VERSION=3.12
+      - name: Build and push
+        run: make release
