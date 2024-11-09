@@ -1,7 +1,6 @@
 # Include the toolchains makefile
 include toolchains.mk
 
-ARCH ?= x86_64
 OUTPUT := bin/$(ARCH)
 
 .PHONY: all
