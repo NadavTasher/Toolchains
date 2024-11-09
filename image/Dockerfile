@@ -18,6 +18,7 @@ RUN --mount=type=bind,source=toolchains,target=/tmp/toolchains \
 		tar xf $file; \
 	done
 
+# Add environment variable of toolchains location
 ENV TOOLCHAINS_DIRECTORY=${TOOLCHAINS_DIRECTORY}
 
 # Copy the resources to the container

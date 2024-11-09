@@ -16,8 +16,12 @@ all: $(OUTPUT)/main
 
 .PHONY: clean
 clean:
+	@# Remove output directory
 	rm -rf $(OUTPUT)
 
 $(OUTPUT)/main: src/main.c
+	@# Create output directory
 	mkdir -p $(OUTPUT)
+
+	@# Compile using the prefix
 	$(PREFIX)gcc -o $@ $^ -static
