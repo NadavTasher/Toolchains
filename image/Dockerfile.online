@@ -39,11 +39,12 @@ ARG TOOLCHAINS_DIRECTORY=/toolchains
 # Change to the toolchains directory
 WORKDIR ${TOOLCHAINS_DIRECTORY}
 
-# Mount toolchains and extract them
+# Mount toolchains and extract them, then create a checksums file for all toolchains
 RUN --mount=type=bind,from=downloads,source=/tmp/toolchains,target=/tmp/toolchains \
 	for file in /tmp/toolchains/*; do \
 		tar xf $file; \
-	done
+	done; \
+	sha256sum /tmp/toolchains/* > checksums
 
 # Add environment variable of toolchains location
 ENV TOOLCHAINS_DIRECTORY=${TOOLCHAINS_DIRECTORY}
