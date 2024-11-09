@@ -1,6 +1,6 @@
 # Change this to your image name
 IMAGE_TAG ?= latest
-IMAGE_NAME ?= bootlin/toolchains
+IMAGE_NAME ?= nadavtasher/toolchains
 
 # Export variables for usage in recipes
 export IMAGE_TAG IMAGE_NAME
@@ -38,11 +38,19 @@ endif
 
 .PHONY: image
 image:
-	@docker build $(SOURCE_DIRECTORY) --pull --tag $(IMAGE_NAME):$(IMAGE_TAG)
+	@docker buildx build $(SOURCE_DIRECTORY) --load --tag $(IMAGE_NAME):$(IMAGE_TAG)
 
 .PHONY: run
 run: image
-	@docker run --rm -it --tmpfs /tmp -v $$PWD/build:/build -w /build --hostname builder $(IMAGE_NAME):$(IMAGE_TAG) bash
+	@docker run --rm -it -v $$PWD/build:/build -w /build -h builder --tmpfs /tmp $(IMAGE_NAME):$(IMAGE_TAG) bash
+
+.PHONY: test
+test: image
+	$(MAKE) -C example container BUILDER_COMMAND="make"
+
+.PHONY: bash
+bash: image
+	$(MAKE) -C example container BUILDER_COMMAND="bash"
 
 .PHONY: clean
 clean:
