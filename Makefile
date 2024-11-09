@@ -45,7 +45,7 @@ image:
 
 .PHONY: release
 release:
-	@docker buildx build $(SOURCE_DIRECTORY) --file $(SOURCE_DIRECTORY)/Dockerfile.$(IMAGE_FLAVOR) --push --tag $(IMAGE_NAME):$(IMAGE_TAG) --tag $(IMAGE_NAME):latest
+	@docker buildx build $(SOURCE_DIRECTORY) --file $(SOURCE_DIRECTORY)/Dockerfile.$(IMAGE_FLAVOR) --push --platform linux/amd64 --tag $(IMAGE_NAME):$(IMAGE_TAG) --tag $(IMAGE_NAME):latest
 
 .PHONY: run
 run: image
