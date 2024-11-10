@@ -27,16 +27,6 @@ all: image
 # If the repository has uncommited changes, tag the image as dirty
 ifneq ($(shell git status --porcelain),)
 IMAGE_TAG := $(IMAGE_TAG)-dirty
-
-.PHONY: push
-push:
-	@echo "There are unstaged changes in the repository, refusing push"
-	@false
-else
-
-.PHONY: push
-push: image
-	@docker push $(IMAGE_NAME):$(IMAGE_TAG)
 endif
 
 .PHONY: image
@@ -53,8 +43,8 @@ run: image
 
 .PHONY: test
 test: image
-	$(MAKE) -C example container BUILDER_COMMAND="make"
+	$(MAKE) -C example container COMMAND="make"
 
 .PHONY: bash
 bash: image
-	$(MAKE) -C example container BUILDER_COMMAND="bash"
+	$(MAKE) -C example container COMMAND="bash"

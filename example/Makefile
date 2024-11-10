@@ -1,5 +1,5 @@
 # Include the toolchains makefile
-include toolchains.mk
+include makefiles/toolchains.mk
 
 # Target compilation architecture
 ARCH ?= x86_64
