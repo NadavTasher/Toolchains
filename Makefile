@@ -2,9 +2,6 @@
 IMAGE_TAG ?= latest
 IMAGE_NAME ?= nadavtasher/toolchains
 
-# Choose the image flavor
-IMAGE_FLAVOR ?= online
-
 # Export variables for usage in recipes
 export IMAGE_TAG IMAGE_NAME
 
@@ -31,11 +28,11 @@ endif
 
 .PHONY: image
 image:
-	@docker buildx build $(SOURCE_DIRECTORY) --file $(SOURCE_DIRECTORY)/Dockerfile.$(IMAGE_FLAVOR) --load --tag $(IMAGE_NAME):$(IMAGE_TAG)
+	@docker buildx build $(SOURCE_DIRECTORY) --file $(SOURCE_DIRECTORY)/Dockerfile --load --tag $(IMAGE_NAME):$(IMAGE_TAG)
 
 .PHONY: release
 release:
-	@docker buildx build $(SOURCE_DIRECTORY) --file $(SOURCE_DIRECTORY)/Dockerfile.$(IMAGE_FLAVOR) --push --platform linux/amd64 --tag $(IMAGE_NAME):$(IMAGE_TAG) --tag $(IMAGE_NAME):latest
+	@docker buildx build $(SOURCE_DIRECTORY) --file $(SOURCE_DIRECTORY)/Dockerfile --push --platform linux/amd64 --tag $(IMAGE_NAME):$(IMAGE_TAG) --tag $(IMAGE_NAME):latest
 
 .PHONY: run
 run: image
